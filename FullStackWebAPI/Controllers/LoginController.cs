@@ -8,7 +8,7 @@ using Services.Models;
 
 namespace FullStackWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/login")]
     [ApiController]
     
     public class LoginController : ControllerBase
@@ -24,8 +24,9 @@ namespace FullStackWebAPI.Controllers
         [AllowAnonymous]
         
 
+
         [HttpPost]
-        public async Task<JsonResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             try
             {
@@ -35,14 +36,17 @@ namespace FullStackWebAPI.Controllers
                 {
                     var token = TokenManger.GenerateToken(login, this.configuration);
 
-                    return new JsonResult(token);
+                    
+                    return Ok(token);
                 }
 
-                return new JsonResult("Your email or password may be wrong.");
+                
+                return BadRequest("Your email or password may be wrong.");
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+              
+                return StatusCode(500, ex.Message);
             }
         }
 

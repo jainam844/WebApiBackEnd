@@ -40,7 +40,7 @@ namespace Services.Implementation
 
         public async Task<int> InsertUser(Users user)
         {
-            string? query = $"EXEC [dbo].[InsertUser] @Action='INSERT', @FirstName={user.FirstName}, @LastName={user.LastName}, @Gender={user.Gender},@Department={user.Department},@DateOfBirth='{DateTime.Parse(user.Date_Of_Birth).ToString("dd-MM-yyyy")}',@Email='{user.Email}',@Password='{user.Password}'";
+            string? query = $"EXEC [dbo].[User_Insert] @Action='INSERT', @FirstName={user.FirstName}, @LastName={user.LastName}, @Gender={user.Gender},@Department={user.Department},@DateOfBirth='{DateTime.Parse(user.Date_Of_Birth).ToString("dd-MM-yyyy")}',@Email='{user.Email}',@Password='{user.Password}'";
             using (var connection = _context.CreateConnection())
             {
                 var users = await connection.QueryAsync<int>(query);
@@ -50,7 +50,7 @@ namespace Services.Implementation
         }
         public async Task<int> UpdateUser(Users user)
         {
-            string? query = $"EXEC[dbo].[UpdateUser] @Action='UPDATE',@UserId = {user.UserId}, @FirstName={user.FirstName}, @LastName={user.LastName}, @Gender={user.Gender},@Department={user.Department},@DateOfBirth='{user.Date_Of_Birth}',@Email='{user.Email}',@Password='{user.Password}'";
+            string? query = $"EXEC[dbo].[User_Update] @Action='UPDATE',@UserId = {user.UserId}, @FirstName={user.FirstName}, @LastName={user.LastName}, @Gender={user.Gender},@Department={user.Department},@DateOfBirth='{user.Date_Of_Birth}',@Email='{user.Email}',@Password='{user.Password}'";
             using (var connection = _context.CreateConnection())
             {
                 var users = await connection.QueryAsync<int>(query);
@@ -61,7 +61,7 @@ namespace Services.Implementation
 
         public async Task<int> DeleteUser(int userId)
         {
-            string? query = $"EXEC [dbo].[DeleteUser] @Action='DELETE', @UserId = {userId}";
+            string? query = $"EXEC [dbo].[User_Delete] @Action='DELETE', @UserId = {userId}";
             using (var connection = _context.CreateConnection())
             {
                 var users = await connection.QueryAsync<int>(query);
@@ -69,6 +69,7 @@ namespace Services.Implementation
             }
  
         }
-
+     
     }
 }
+

@@ -6,8 +6,9 @@ using Services.Interface;
 
 namespace FullStackWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
@@ -15,15 +16,15 @@ namespace FullStackWebAPI.Controllers
         {
             this.userService = userService;
         }
-        [Authorize]
+    
 
-        [HttpGet("Get")]
+        [HttpGet("get")]
         public async  Task<IActionResult> GetUser()
          {
             var user = await this.userService.GetUsers();
             return Ok(user);    
         }
-        [HttpGet("Get/{userId}")]
+        [HttpGet("get/{userId}")]
         public async Task<IActionResult> GetUserById(int userId)
         {
             try
@@ -44,7 +45,7 @@ namespace FullStackWebAPI.Controllers
 
             }
         }
-        [HttpPost("Add")]
+        [HttpPost("add")]
         public async Task<IActionResult> AddUser([FromBody] Users user)
         {
             try
@@ -59,7 +60,7 @@ namespace FullStackWebAPI.Controllers
             }
         }  
 
-        [HttpPut("Update")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateUser([FromBody] Users user)
         {
             try
@@ -73,7 +74,7 @@ namespace FullStackWebAPI.Controllers
             }
         }
 
-        [HttpDelete("Delete")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteUser(int userid)
         {
             try
